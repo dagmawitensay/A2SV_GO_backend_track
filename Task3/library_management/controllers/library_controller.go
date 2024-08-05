@@ -2,7 +2,7 @@ package controllers
 
 import (
 	"fmt"
-	"library_management/Services"
+	"library_management/services"
 	"library_management/models"
 )
 
@@ -16,9 +16,11 @@ func NewLibraryController() *LibraryController{
 	}
 }
 
+
 func (lc *LibraryController) AddBook() {
 	var id int
 	var title string
+	var author string
 
 	for {
 		fmt.Print("Enter Book ID: ")
@@ -40,7 +42,18 @@ func (lc *LibraryController) AddBook() {
 		break
 	}
 
-	book := models.Book{ID: id, Title: title}
+	for {
+		fmt.Print("Enter Book author: ")
+		_, err := fmt.Scan(&author)
+		if err != nil {
+			fmt.Println("Invalid Input. Please Enter a valid author name.")
+			continue
+		}
+		break
+	}
+
+
+	book := models.Book{ID: id, Title: title, Author: author, Status: "Available"}
 	lc.Library.AddBook(book)
 	fmt.Println("Book added Successfully!")
 }
@@ -60,6 +73,24 @@ func (lc *LibraryController) RemoveBook() {
 
 	lc.Library.RemoveBook(id)
 	fmt.Println("Book has been removed successfully!")
+}
+
+func (lc *LibraryController) AddMember() {
+	var memberId int
+
+	for {
+		fmt.Print("Enter member ID: ")
+		_, err := fmt.Scan(&memberId)
+		if err != nil {
+			fmt.Println("Invalid number. Please insert valid id")
+			continue
+		}
+		break
+	}
+
+	member := models.Member{ID: memberId}
+	lc.Library.Members[memberId] = member
+	fmt.Println("Member added successfully!")
 }
 
 func (lc *LibraryController) BorrowBook() {
@@ -179,6 +210,8 @@ func (lc *LibraryController) Run() {
 			lc.ListAvailableBooks()
 		case 6:
 			lc.ListBorrowedBooks()
+		case 7:
+			lc.AddMember()
 		default:
 			fmt.Println("Invalid choice. Please try again!")
 		}

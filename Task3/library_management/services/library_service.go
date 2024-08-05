@@ -26,6 +26,10 @@ func NewLibrary() *Library {
 	}
 }
 
+func (l *Library) AddMember(member models.Member) {
+	l.Members[member.ID] = member
+}
+
 func (l *Library) AddBook(book models.Book) {
 	l.Books[book.ID] = book;
 }
@@ -55,14 +59,12 @@ func (l *Library) BorrowBook(bookID, memberID int) error {
 		return errors.New("member not found")
 	}
 
-	for _, member := range l.Members {
-		for _, borrowedBook := range member.BorrowedBooks {
-			if borrowedBook.ID == bookID {
-				return errors.New("book is already borrowed")
-			}
-		}
+	if book.Status == "Borrowed" {
+		return errors.New("book is already borrowed")
 	}
 
+	book.Status = "Borrowed"
+	l.Books[bookID] = book
 	member.BorrowedBooks = append(member.BorrowedBooks, book)
 	l.Members[memberID] = member
 	return nil
@@ -74,10 +76,14 @@ func (l *Library) ReturnBook(bookID, memberID int) error {
 		return errors.New("member not found")
 	}
 
+
 	for i, borrowedBook := range member.BorrowedBooks {
 		if borrowedBook.ID == bookID {
 			member.BorrowedBooks = append(member.BorrowedBooks[:i], member.BorrowedBooks[i + 1: ]...)
 			l.Members[memberID] = member
+			book := l.Books[bookID]
+			book.Status = "Available"
+			l.Books[bookID] = book
 			return nil
 		}
 	}
@@ -90,20 +96,9 @@ func (l *Library) ListAvailableBooks() []models.Book {
 	availableBooks := make([]models.Book, 0)
 
 	for _, book := range l.Books {
-		isBorrowed := false
-		for _, member := range l.Members {
-			for _, borrowedBook := range member.BorrowedBooks{
-				if borrowedBook.ID == book.ID {
-					isBorrowed = true
-					break
-				}
-			}
-			if isBorrowed {
-				break
-			}
-			if !isBorrowed {
-				availableBooks = append(availableBooks, book)
-			}
+		if book.Status == "Available" {
+			availableBooks = append(availableBooks, book)
+			
 		}
 	}
 
