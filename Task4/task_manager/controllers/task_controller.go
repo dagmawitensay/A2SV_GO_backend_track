@@ -4,7 +4,6 @@ import (
 	"net/http"
 	"task_manager/data"
 	"task_manager/models"
-
 	"github.com/gin-gonic/gin"
 )
 
