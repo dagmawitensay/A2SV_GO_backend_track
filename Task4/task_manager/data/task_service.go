@@ -2,7 +2,6 @@ package data
 
 import (
 	"errors"
-	"fmt"
 	"task_manager/models"
 	"time"
 )
@@ -61,7 +60,6 @@ func (ts *TaskService) UpdateTask(id string, updatedTask models.Task) (err error
 				task.DueDate = updatedTask.DueDate
 			}
 			
-			fmt.Println(updatedTask)
 			if updatedTask.Status != "" {
 				task.Status = updatedTask.Status
 			}
