@@ -23,7 +23,7 @@ func (g *GradeCalculator) AcceptGrades(){
 	for {
 		fmt.Print("Enter number of Subjects: ")
 		_, err := fmt.Scan(&n)
-		if err != nil {
+		if err != nil || n < 0 {
 			fmt.Println("Invalid Input. Please insert a valid number of subjects.")
 			continue
 		}
@@ -63,7 +63,11 @@ func (g *GradeCalculator) CalculateGrade() {
 		total += grade
 	}
 
-	g.averageGrade = total / n
+	if n != 0 {
+		g.averageGrade = total / n
+	} else {
+		g.averageGrade = 0
+	}
 }
 
 
