@@ -12,13 +12,15 @@ import (
 )
 
 func main() {
-	collection, err := getCollection()
+	db, err := getDBConnection()
 
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	taskService := data.NewTaskService(collection)
+	taskCollection := db.Collection("tasks")
+
+	taskService := data.NewTaskService(taskCollection)
 	r := router.SetupRouter(*taskService)
 	r.Run(":8080")
 }
@@ -42,14 +44,14 @@ func connectToMongoDB(uri string) (*mongo.Client, error) {
     return client, nil
 }
 
-func getCollection() (*mongo.Collection, error) {
+func getDBConnection() (*mongo.Database, error) {
 	client, err := connectToMongoDB("mongodb://localhost:27017")
 	if err != nil {
 		log.Fatal(err)
 		return nil, err
 	}
 
-	collection := client.Database("taskdb").Collection("tasks")
+	db := client.Database("taskdb")
 
-	return collection, nil
+	return db, nil
 }
