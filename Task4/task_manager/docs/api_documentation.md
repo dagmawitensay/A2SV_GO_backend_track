@@ -7,6 +7,30 @@ The Task Management API allows users to manage tasks by creating, reading, updat
 
 [http://localhost:8080](http://localhost:8080)
 
+## Project Structure
+```sh
+    task_manager/
+    ├── main.go
+    ├── controllers/
+    │   └── task_controller.go
+    ├── models/
+    │   └── task.go
+    ├── data/
+    │   └── task_service.go
+    ├── router/
+    │   └── router.go
+    ├── docs/
+    │   └── api_documentation.md
+    └── go.mod
+```
+
+- **main.go:** Entry point of the application.
+- **controllers/task_controller.go:** Handles incoming HTTP requests and invokes the appropriate service methods.
+- **models/:** Defines the data structures used in the application.
+- **data/task_service.go:** Contains business logic and data manipulation functions.
+- **router/router.go:** Sets up the routes and initializes the Gin router and defines the routing configuration for the API.
+- **docs/api_documentation.md:** Contains API documentation and other related documentation.
+- **go.mod:** Defines the module and its dependencies.
 
 ## Endpoints
 
@@ -38,19 +62,6 @@ No parameters.
     }
 ]
 ```
-
-### 2. Get a Task by ID
-**URL:** `/tasks/:id`
-**Method:** `GET`
-**Description:** Retrieves a task by its ID.
-Request:
-
-- **Parameters:**
-id (string) - The ID of the task.
-Response:
-
-Status: 200 OK
-Body:
 
 ### 2. Get a Task by ID
 **URL:** `/tasks/:id`  
