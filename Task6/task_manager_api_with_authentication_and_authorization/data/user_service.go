@@ -62,7 +62,6 @@ func (us *UserService) RegisterUser(user models.User) error {
 	}
 
 	return errors.New("internal server error: failed to check if user exists")
-	return nil
 }
 
 
