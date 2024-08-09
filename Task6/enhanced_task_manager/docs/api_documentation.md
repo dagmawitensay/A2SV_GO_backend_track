@@ -175,7 +175,7 @@ If the database is empty, the first user to register will automatically be assig
 **Method:** `POST`  
 **Description:**  Creates a new task.
 **Request:** 
-- **Authorization:** Bearer `<JWT token>`
+- **Authorization:** Bearer `<JWT token>` (Admin role required)t
 - **Body:**
 ```json
 {
@@ -202,7 +202,7 @@ If the database is empty, the first user to register will automatically be assig
 **Method:** `PUT`  
 **Description:**  Updates an existing task.
 **Request:** 
-- **Authorization:** Bearer `<JWT token>`
+- **Authorization:** Bearer `<JWT token>` (Admin role required)
 - **Parameters:**
     - `id (string)` - The ID of the task.
 - **Body:**
@@ -233,7 +233,7 @@ If the database is empty, the first user to register will automatically be assig
 **Method:** `DELETE`  
 **Description:**  Deletes a task by its ID.
 **Request:** 
-- **Authorization:** Bearer `<JWT token>`
+- **Authorization:** Bearer `<JWT token>` (Admin role required)
 - **Parameters:**
     - `id (string)` - The ID of the task.
 **Response:**
