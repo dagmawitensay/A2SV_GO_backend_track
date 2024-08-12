@@ -7,12 +7,12 @@ import (
 )
 
 type LibraryController struct {
-	Library *services.Library
+	Library services.LibraryManager
 }
 
-func NewLibraryController() *LibraryController{
+func NewLibraryController(library services.LibraryManager) *LibraryController{
 	return &LibraryController{
-		Library: services.NewLibrary(),
+		Library: library,
 	}
 }
 
@@ -89,7 +89,7 @@ func (lc *LibraryController) AddMember() {
 	}
 
 	member := models.Member{ID: memberId}
-	lc.Library.Members[memberId] = member
+	lc.Library.AddMember(member)
 	fmt.Println("Member added successfully!")
 }
 
