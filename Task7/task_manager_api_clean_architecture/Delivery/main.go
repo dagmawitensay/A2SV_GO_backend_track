@@ -3,7 +3,7 @@ package main
 import (
 	"context"
 	"log"
-	"task_manager_api_clean_architecture/task_manager_api_clean_architecture/Delivery/routers"
+	"task_manager_api_clean_architecture/Delivery/routers"
 	"time"
 
 	"github.com/gin-gonic/gin"

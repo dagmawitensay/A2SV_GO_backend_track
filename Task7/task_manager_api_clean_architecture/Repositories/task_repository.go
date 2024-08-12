@@ -3,7 +3,7 @@ package repositories
 import (
 	"context"
 	"errors"
-	domain "task_manager_api_clean_architecture/task_manager_api_clean_architecture/Domain"
+	domain "task_manager_api_clean_architecture/Domain"
 	"time"
 
 	"go.mongodb.org/mongo-driver/bson"

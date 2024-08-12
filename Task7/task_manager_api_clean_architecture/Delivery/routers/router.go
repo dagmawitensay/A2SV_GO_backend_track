@@ -1,11 +1,11 @@
 package routers
 
 import (
-	"task_manager_api_clean_architecture/task_manager_api_clean_architecture/Delivery/controllers"
-	domain "task_manager_api_clean_architecture/task_manager_api_clean_architecture/Domain"
-	infrastructure "task_manager_api_clean_architecture/task_manager_api_clean_architecture/Infrastructure"
-	repositories "task_manager_api_clean_architecture/task_manager_api_clean_architecture/Repositories"
-	usecases "task_manager_api_clean_architecture/task_manager_api_clean_architecture/UseCases"
+	"task_manager_api_clean_architecture/Delivery/controllers"
+	domain "task_manager_api_clean_architecture/Domain"
+	infrastructure "task_manager_api_clean_architecture/Infrastructure"
+	repositories "task_manager_api_clean_architecture/Repositories"
+	usecases "task_manager_api_clean_architecture/UseCases"
 	"time"
 
 	"github.com/gin-gonic/gin"

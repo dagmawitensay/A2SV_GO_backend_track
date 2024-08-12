@@ -5,8 +5,8 @@ import (
 	"errors"
 	"fmt"
 	"os"
-	domain "task_manager_api_clean_architecture/task_manager_api_clean_architecture/Domain"
-	infrastructure "task_manager_api_clean_architecture/task_manager_api_clean_architecture/Infrastructure"
+	domain "task_manager_api_clean_architecture/Domain"
+	infrastructure "task_manager_api_clean_architecture/Infrastructure"
 
 	"github.com/joho/godotenv"
 	"go.mongodb.org/mongo-driver/bson"
@@ -111,7 +111,7 @@ func (ur *userRepository) Promote(c context.Context, id string) error {
 }
 
 func getJwtSecret(key string) string {
-	err := godotenv.Load("../.env")
+	err := godotenv.Load(".env")
 	if err != nil {
 		return err.Error()
 	}

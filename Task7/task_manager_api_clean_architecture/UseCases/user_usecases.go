@@ -2,7 +2,7 @@ package usecases
 
 import (
 	"context"
-	domain "task_manager_api_clean_architecture/task_manager_api_clean_architecture/Domain"
+	domain "task_manager_api_clean_architecture/Domain"
 	"time"
 )
 

@@ -63,7 +63,7 @@ func RoleMiddleware() gin.HandlerFunc {
 
 
 func getJwtSecret(key string) string {
-	err := godotenv.Load("../.env")
+	err := godotenv.Load(".env")
 	if err != nil {
 		return ""
 	}
