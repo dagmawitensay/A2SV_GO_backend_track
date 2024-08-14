@@ -255,3 +255,5 @@ If the database is empty, the first user to register will automatically be assig
     "message": "User promoted successfully!"
 }
 ```
+
+Link to [Postman Documentation](https://documenter.getpostman.com/view/34185326/2sA3s4kVco)
