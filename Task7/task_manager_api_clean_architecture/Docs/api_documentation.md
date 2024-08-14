@@ -272,3 +272,4 @@ If no users exist in the database, the first registered user will automatically 
 - **Consistency:** Maintain the current folder structure and separation of concerns when adding new features.
 - **Interfaces:** Ensure that all new functionalities are abstracted using interfaces, keeping implementation details hidden.
 - **Documentation:** Update the documentation regularly to reflect any architectural changes or new features.
+Link to [Postman Documentation](https://documenter.getpostman.com/view/34185326/2sA3s4kVco)
