@@ -43,6 +43,18 @@ jobs:
           cd Task8-Testing
           cd task_manager_api_clean_architecture
           go mod tidy
+      
+       name: 'Create env file'
+        run: |
+          cd Task8-Testing
+          cd task_manager_api_clean_architecture
+          touch .env
+          echo JWT_SECRET=${{ secrets.JWT_SECRET }} >> .env
+          echo DB_URI=${{ secrets.DB_URI }} >> .env
+          echo DB_NAME=${{ secrets.DB_NAME }} >> .env
+          echo DB_USER="" >> .env
+          echo DB_PASSWORD="" >> .env
+          cat .env
 
       # Run tests with coverage
       - name: Run tests
