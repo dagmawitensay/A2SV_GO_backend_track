@@ -14,9 +14,9 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
-func SetupRouter(timeout time.Duration, db *mongo.Database, gin *gin.Engine) {
+func SetupRouter(timeout time.Duration, db *mongo.Database, gin *gin.Engine, jwtService infrastructure.JWTService) {
 	tr := taskrepository.NewTaskRepository(db, domain.CollectionTask)
-	ur := userrepository.NewUserRepository(db, domain.CollectionUser)
+	ur := userrepository.NewUserRepository(db, domain.CollectionUser, jwtService)
 	
 	ctr := &controllers.Controller{
 		TaskUsecase: taskusecases.NewTaskUseCase(tr, timeout),

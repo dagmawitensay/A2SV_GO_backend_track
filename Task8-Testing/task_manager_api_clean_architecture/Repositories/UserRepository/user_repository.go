@@ -4,11 +4,9 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"os"
 	domain "task_manager_api_clean_architecture/Domain"
 	infrastructure "task_manager_api_clean_architecture/Infrastructure"
 
-	"github.com/joho/godotenv"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -17,12 +15,14 @@ import (
 type userRepository struct {
 	database *mongo.Database
 	collection string
+	jwtService infrastructure.JWTService
 }
 
-func NewUserRepository(db *mongo.Database, collection string) domain.UserRepository {
+func NewUserRepository(db *mongo.Database, collection string, jwtService infrastructure.JWTService) domain.UserRepository {
 	return &userRepository{
 		database: db,
 		collection: collection,
+		jwtService: jwtService,
 	}
 }
 
@@ -73,7 +73,6 @@ func (ur *userRepository) Login(c context.Context, user *domain.User) (string, e
 		return "", err
 	}
 
-	var jwtSecret = []byte(getJwtSecret("JWT_SECRET"))
 
 	isSame := infrastructure.ComparePasswordHash(user.Password, existingUser.Password)
 
@@ -81,8 +80,7 @@ func (ur *userRepository) Login(c context.Context, user *domain.User) (string, e
 		return "", errors.New("invalid email or password")
 	}
 
-	jwtService := infrastructure.NewJWTService(jwtSecret)
-	jwtToken, err := jwtService.GenerateToken(existingUser.ID.String(), existingUser.Email, existingUser.Role, 24 * 60 * 60 * 30)
+	jwtToken, err := ur.jwtService.GenerateToken(existingUser.ID.String(), existingUser.Email, existingUser.Role, 24 * 60 * 60 * 30)
 
 	if err != nil {
 		return "", errors.New("inernal serever error")
@@ -107,13 +105,4 @@ func (ur *userRepository) Promote(c context.Context, id string) error {
 	}
 
 	return nil
-}
-
-func getJwtSecret(key string) string {
-	err := godotenv.Load(".env")
-	if err != nil {
-		return err.Error()
-	}
-
-	return os.Getenv(key)
 }

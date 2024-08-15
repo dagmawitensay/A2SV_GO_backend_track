@@ -4,8 +4,10 @@ import (
 	"context"
 	config "task_manager_api_clean_architecture/Config"
 	domain "task_manager_api_clean_architecture/Domain"
+	"task_manager_api_clean_architecture/mocks"
 	"testing"
 
+	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/suite"
 	"go.mongodb.org/mongo-driver/mongo"
 )
@@ -14,12 +16,14 @@ type userRepositorySuite struct {
 	suite.Suite
 	repository domain.UserRepository
 	db         *mongo.Database
+	jwtService *mocks.JWTService
 }
 
 func (suite *userRepositorySuite) SetupSuite() {
 	configs := config.GetConfig()
 	suite.db = config.GetDB(configs)
-	repository := NewUserRepository(suite.db, "users")
+	suite.jwtService = new(mocks.JWTService)
+	repository := NewUserRepository(suite.db, "users", suite.jwtService)
 
 	suite.repository = repository
 }
@@ -67,6 +71,8 @@ func (suite *userRepositorySuite) TestLogin_Positive() {
 	err := suite.repository.Create(context.Background(), user)
 	suite.NoError(err)
 	user.Password = "password123"
+
+	suite.jwtService.On("GenerateToken", mock.Anything, mock.Anything, mock.Anything, mock.Anything).Return("mocked_token", nil)
 
 	jwtToken, err := suite.repository.Login(context.Background(), user)
 	suite.NoError(err)
