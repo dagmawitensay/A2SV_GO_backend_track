@@ -2,36 +2,31 @@ package config
 
 import (
 	"fmt"
-	"log"
 	"os"
 	domain "task_manager_api_clean_architecture/Domain"
 
-	"github.com/joho/godotenv"
+	"github.com/spf13/viper"
 )
 
-func GetConfig() *domain.Config {
-	wd, err := os.Getwd()
-	fmt.Println(wd)
 
-	err =  godotenv.Load()
 
-	if err != nil {
-		log.Fatal("Error while reading env file: ", err)
-	}
-	
-	config := &domain.Config{
-		Database: domain.DatabaseConfig{
-			DBURI:    os.Getenv("DB_URI"),
-			DbName:   os.Getenv("DB_NAME"),
-			Username: os.Getenv("DB_USER"),
-			Password: os.Getenv("DB_PASSWORD"),
-		},
-		TimeZone:  "UTC/GMT +3",
-		SecretKey: os.Getenv("JWT_SECRET"),
-	}
-	
-	return config
-	
+
+func LoadConfig(path string) (config domain.Config, err error) {
+  viper.AddConfigPath(path)
+  viper.SetConfigType("env")
+  viper.SetConfigName(".env")
+
+  viper.AutomaticEnv()
+  p, err := os.Getwd()
+  fmt.Println("printing workin directory", p)
+
+  err = viper.ReadInConfig()
+  if err != nil {
+    return
+  }
+
+  err = viper.Unmarshal(&config)
+  return
 }
 
 	 

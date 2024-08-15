@@ -19,8 +19,9 @@ type taskRepositorySuite struct {
 }
 
 func (suite *taskRepositorySuite) SetupSuite() {
-	configs := config.GetConfig()
-	suite.db = config.GetDB(configs)
+	configs, err := config.LoadConfig("../../")
+	suite.NoError(err)
+	suite.db = config.GetDB(&configs)
 	repository := NewTaskRepository(suite.db, "tasks")
 
 	suite.repository = repository

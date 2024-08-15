@@ -1,15 +1,9 @@
 package domain
 
 type Config struct {
-	Database DatabaseConfig
-	TimeZone string
-	SecretKey string
-}
-
-
-type DatabaseConfig struct {
-	DBURI string
-	DbName string
-	Username string
-	Password string
+	DBURI    	string 			`mapstructure:"DB_URI"`
+	DbName 		string 			`mapstructure:"DB_NAME"`
+	Username    string 			`mapstructure:"DB_USER"`
+	Password  	string        	`mapstructure:"DB_PASSWORD"`
+	SecretKey   string        	`mapstructure:"JWT_SECRET"`
 }

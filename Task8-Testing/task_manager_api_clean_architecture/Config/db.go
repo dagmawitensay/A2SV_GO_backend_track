@@ -12,12 +12,12 @@ import (
 
 
 func GetDB(config *domain.Config) (*mongo.Database) {
-	client, err := connectToMongoDB(config.Database.DBURI)
+	client, err := connectToMongoDB(config.DBURI)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	db := client.Database(config.Database.DbName)
+	db := client.Database(config.DbName)
 
 	return db
 }

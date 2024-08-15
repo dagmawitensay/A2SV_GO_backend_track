@@ -1,6 +1,7 @@
 package main
 
 import (
+	"log"
 	config "task_manager_api_clean_architecture/Config"
 	"task_manager_api_clean_architecture/Delivery/routers"
 	infrastructure "task_manager_api_clean_architecture/Infrastructure"
@@ -10,8 +11,12 @@ import (
 )
 
 func main() {
-	configs := config.GetConfig()
-	db := config.GetDB(configs)
+	configs, err := config.LoadConfig(".")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	db := config.GetDB(&configs)
 	jwtService := infrastructure.NewJWTService([]byte(configs.SecretKey))
 
 	r := gin.Default()

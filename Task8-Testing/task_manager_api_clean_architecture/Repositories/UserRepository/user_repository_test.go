@@ -20,8 +20,9 @@ type userRepositorySuite struct {
 }
 
 func (suite *userRepositorySuite) SetupSuite() {
-	configs := config.GetConfig()
-	suite.db = config.GetDB(configs)
+	configs, err := config.LoadConfig("../../")
+	suite.NoError(err)
+	suite.db = config.GetDB(&configs)
 	suite.jwtService = new(mocks.JWTService)
 	repository := NewUserRepository(suite.db, "users", suite.jwtService)
 
