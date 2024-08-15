@@ -41,8 +41,8 @@ jobs:
           echo JWT_SECRET=${{ secrets.JWT_SECRET }} >> .env
           echo DB_URI=${{ secrets.DB_URI }} >> .env
           echo DB_NAME=${{ secrets.DB_NAME }} >> .env
-          echo DB_USER="" >> .env
-          echo DB_PASSWORD="" >> .env
+          echo DB_USER=${{ secrets.DB_USER }} >> .env
+          echo DB_PASSWORD=${{ secrets.DB_PASSWORD }} >> .env
           cat .env
 
       - name: Run tests
