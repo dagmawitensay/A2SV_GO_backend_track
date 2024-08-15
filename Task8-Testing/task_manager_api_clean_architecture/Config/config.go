@@ -1,6 +1,7 @@
 package config
 
 import (
+	"fmt"
 	domain "task_manager_api_clean_architecture/Domain"
 
 	"github.com/spf13/viper"
@@ -8,21 +9,29 @@ import (
 
 
 
-
 func LoadConfig(path string) (config domain.Config, err error) {
-  viper.AddConfigPath(path)
-  viper.SetConfigType("env")
-  viper.SetConfigName(".env")
+	viper.AddConfigPath(path)
+    viper.SetConfigType("env")
+    viper.SetConfigName(".env")
 
-  viper.AutomaticEnv()
+    // Enable Viper to read environment variables directly
+    viper.AutomaticEnv()
 
-  err = viper.ReadInConfig()
-  if err != nil {
+    // Read the config file
+    err = viper.ReadInConfig()
+    if err != nil {
+        fmt.Println("Error reading config file:", err)
+        return
+    }
+
+    // Unmarshal the config into the struct
+    err = viper.Unmarshal(&config)
+    if err != nil {
+        fmt.Println("Error unmarshalling config:", err)
+        return
+    }
+
     return
-  }
-
-  err = viper.Unmarshal(&config)
-  return
 }
 
 	 

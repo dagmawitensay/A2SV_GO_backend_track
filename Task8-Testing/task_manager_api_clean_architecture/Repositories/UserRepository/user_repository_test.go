@@ -2,7 +2,6 @@ package userrepository
 
 import (
 	"context"
-	"fmt"
 	config "task_manager_api_clean_architecture/Config"
 	domain "task_manager_api_clean_architecture/Domain"
 	"task_manager_api_clean_architecture/mocks"
@@ -21,8 +20,7 @@ type userRepositorySuite struct {
 }
 
 func (suite *userRepositorySuite) SetupSuite() {
-	configs, err := config.LoadConfig("../../")
-	fmt.Println("view confg", configs)
+	configs, err := config.LoadConfig("../../.")
 	suite.NoError(err)
 	suite.db = config.GetDB(&configs)
 	suite.jwtService = new(mocks.JWTService)
