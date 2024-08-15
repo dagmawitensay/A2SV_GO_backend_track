@@ -36,7 +36,7 @@ jobs:
 
       - name: Create env file in TaskRepository
         run: |
-          cd Task8-Testing/task_manager_api_clean_architecture/Repositories/TaskRepostiory
+          cd Task8-Testing/task_manager_api_clean_architecture/Repositories/TaskRepository
           touch .env
           echo JWT_SECRET=${{ secrets.JWT_SECRET }} >> .env
           echo DB_URI=${{ secrets.DB_URI }} >> .env
@@ -45,7 +45,7 @@ jobs:
           echo DB_PASSWORD="" >> .env
           cat .env
       
-       - name: Create env file in user repository
+      - name: Create env file in UserRepository
         run: |
           cd Task8-Testing/task_manager_api_clean_architecture/Repositories/UserRepository
           touch .env
