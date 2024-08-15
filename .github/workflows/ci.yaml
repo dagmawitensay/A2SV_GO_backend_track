@@ -34,20 +34,9 @@ jobs:
           cd Task8-Testing/task_manager_api_clean_architecture
           go mod tidy
 
-      - name: Create env file in TaskRepository
+      - name: Create env file
         run: |
-          cd Task8-Testing/task_manager_api_clean_architecture/Repositories/TaskRepository
-          touch .env
-          echo JWT_SECRET=${{ secrets.JWT_SECRET }} >> .env
-          echo DB_URI=${{ secrets.DB_URI }} >> .env
-          echo DB_NAME=${{ secrets.DB_NAME }} >> .env
-          echo DB_USER="" >> .env
-          echo DB_PASSWORD="" >> .env
-          cat .env
-      
-      - name: Create env file in UserRepository
-        run: |
-          cd Task8-Testing/task_manager_api_clean_architecture/Repositories/UserRepository
+          cd Task8-Testing/task_manager_api_clean_architecture
           touch .env
           echo JWT_SECRET=${{ secrets.JWT_SECRET }} >> .env
           echo DB_URI=${{ secrets.DB_URI }} >> .env
