@@ -42,7 +42,7 @@ jobs:
         run: |
           cd Task8-Testing
           cd task_manager_api_clean_architecture
-          run: go mod tidy
+          go mod tidy
 
       # Run tests with coverage
       - name: Run tests
