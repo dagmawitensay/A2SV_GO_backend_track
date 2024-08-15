@@ -1,32 +1,24 @@
 name: Go CI
 
-# Run this workflow on pushes and pull requests to the main branch
 on:
   push:
     branches: [main]
   pull_request:
     branches: [main]
 
-# Define the jobs that will run as part of this workflow
 jobs:
   build:
-
-    # The job will run on an Ubuntu machine
     runs-on: ubuntu-latest
 
-    # Define the steps in the job
     steps:
-      # Check out the code from your repository
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Set up Go on the runner
       - name: Set up Go
         uses: actions/setup-go@v4
         with:
           go-version: 1.22.5  # Specify your Go version here
 
-      # Cache Go modules to speed up the workflow
       - name: Cache Go modules
         uses: actions/cache@v3
         with:
@@ -36,3 +28,24 @@ jobs:
           key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
           restore-keys: |
             ${{ runner.os }}-go-
+
+      - name: Install dependencies
+        run: |
+          cd Task8-Testing/task_manager_api_clean_architecture
+          go mod tidy
+
+      - name: Create env file
+        run: |
+          cd Task8-Testing/task_manager_api_clean_architecture
+          touch .env
+          echo JWT_SECRET=${{ secrets.JWT_SECRET }} >> .env
+          echo DB_URI=${{ secrets.DB_URI }} >> .env
+          echo DB_NAME=${{ secrets.DB_NAME }} >> .env
+          echo DB_USER="" >> .env
+          echo DB_PASSWORD="" >> .env
+          cat .env
+
+      - name: Run tests
+        run: |
+          cd Task8-Testing/task_manager_api_clean_architecture
+          go test ./... -v -coverprofile=coverage.out
